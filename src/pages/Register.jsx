@@ -9,8 +9,23 @@ import { Box } from "@mui/material";
 import AuthHeader from "../components/AuthHeader";
 import AuthImage from "../components/AuthImage";
 import { Formik } from "formik";
+import * as Yup from "yup";
+import RegisterForm from "../components/RegisterForm";
 
 const Register = () => {
+  const registerSchema = Yup.object().shape({
+    username: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+    firstName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+    lastName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+    email: Yup.string().email("Invalid email").required("Required"),
+    password: Yup.string()
+      .min(8, "Password should be more than 8 characters")
+      .matches(/[a-z]/, "Password should include lowercase")
+      .matches(/[A-Z]/, "Password should include uppercase")
+      .matches(/\d+/, "Password should include numeric")
+      .matches(/[$%&_*?!-]/, "Password should include special characters ($%&_*?!-)"),
+  });
+
   return (
     <Container maxWidth="lg">
       <Grid
@@ -41,7 +56,19 @@ const Register = () => {
           </Typography>
 
           <Formik
-          
+            initialValues={{ username: "", firstName: "", lastName: "", password: "" }}
+            validate={(values) => {
+              const errors = {};
+              if (!values.email) {
+                errors.email = "Required";
+              } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                errors.email = "Invalid email address";
+              }
+              return errors;
+            }}
+            validationSchema={registerSchema}
+            onSubmit={(values) => console.log(values)}
+            component={(props) => <RegisterForm {...props}/>}
           ></Formik>
 
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
