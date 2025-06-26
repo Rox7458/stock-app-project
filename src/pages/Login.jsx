@@ -10,8 +10,22 @@ import { Link } from "react-router-dom";
 import AuthHeader from "../components/AuthHeader";
 import AuthImage from "../components/AuthImage";
 
+import LoginForm from "../components/LoginForm";
+import { Formik } from "formik";
+import * as Yup from "yup";
+
 const Login = () => {
   const theme = useTheme();
+
+  const loginSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Required"),
+    password: Yup.string()
+      .min(8, "Password should be more than 8 characters")
+      .matches(/[a-z]/, "Password should include lowercase")
+      .matches(/[A-Z]/, "Password should include uppercase")
+      .matches(/\d+/, "Password should include numeric")
+      .matches(/[$%&_*?!-]/, "Password should include special characters ($%&_*?!-)"),
+  });
 
   return (
     <Container maxWidth="lg">
@@ -41,10 +55,18 @@ const Login = () => {
             SIGN IN
           </Typography>
 
+          <Formik
+            initialValues={{
+              password: "",
+              email: "",
+            }}
+            validationSchema={loginSchema}
+            onSubmit={(values) => console.log(values)}
+            component={(props) => <LoginForm {...props} />}
+          />
+
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
-            <Link to="/register">
-              Don't have an account? Sign Up
-            </Link>
+            <Link to="/register">Don't have an account? Sign Up</Link>
           </Box>
         </Grid>
 
