@@ -5,16 +5,20 @@ import LockIcon from "@mui/icons-material/Lock";
 import image from "../assets/regi.avif";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, useThemeProps } from "@mui/material";
 import AuthHeader from "../components/AuthHeader";
 import AuthImage from "../components/AuthImage";
+
 import { Formik } from "formik";
 import * as Yup from "yup";
 import RegisterForm from "../components/RegisterForm";
+import useAuthCall from "../hook/useAuthCall";
 
 const Register = () => {
+  const { register } = useAuthCall();
+
   const registerSchema = Yup.object().shape({
-    username: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+    username: Yup.string().min(2, "Too short!").max(50, "Too Long!").required("Required"),
     firstName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
     lastName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
@@ -56,20 +60,17 @@ const Register = () => {
           </Typography>
 
           <Formik
-            initialValues={{ username: "", firstName: "", lastName: "", password: "" }}
-            validate={(values) => {
-              const errors = {};
-              if (!values.email) {
-                errors.email = "Required";
-              } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                errors.email = "Invalid email address";
-              }
-              return errors;
+            initialValues={{
+              username: "",
+              password: "",
+              email: "",
+              firstName: "",
+              lastName: "",
             }}
             validationSchema={registerSchema}
-            onSubmit={(values) => console.log(values)}
-            component={(props) => <RegisterForm {...props}/>}
-          ></Formik>
+            onSubmit={(values) => register(values)}
+            component={(props) => <RegisterForm {...props} />}
+          />
 
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
             <Link to="/">Already have an account? Sign in</Link>

@@ -1,6 +1,5 @@
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -9,24 +8,21 @@ import image from "../assets/hero.png";
 import { Link } from "react-router-dom";
 import AuthHeader from "../components/AuthHeader";
 import AuthImage from "../components/AuthImage";
-
-import LoginForm from "../components/LoginForm";
 import { Formik } from "formik";
+import LoginForm from "../components/LoginForm";
 import * as Yup from "yup";
+import useAuthCall from "../hook/useAuthCall";
 
 const Login = () => {
-  const theme = useTheme();
+  const { login } = useAuthCall();
 
-  const loginSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string()
-      .min(8, "Password should be more than 8 characters")
-      .matches(/[a-z]/, "Password should include lowercase")
-      .matches(/[A-Z]/, "Password should include uppercase")
-      .matches(/\d+/, "Password should include numeric")
-      .matches(/[$%&_*?!-]/, "Password should include special characters ($%&_*?!-)"),
+  const SignupSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(5, "Kullanıcı adı 5 karakterden az olamaz")
+      .max(50, "Kullanıcı adı 50 karakterden fazla olamaz")
+      .required("Kullanıcı adı zorunludur"),
+    password: Yup.string().required("password zorunludur"),
   });
-
   return (
     <Container maxWidth="lg">
       <Grid
@@ -56,12 +52,14 @@ const Login = () => {
           </Typography>
 
           <Formik
-            initialValues={{
-              password: "",
-              email: "",
+            initialValues={{ username: "", password: "" }}
+            validationSchema={SignupSchema}
+            onSubmit={(values, actions) => {
+              console.log(values);
+              login(values);
+              actions.resetForm();
+              actions.setSubmitting(false);
             }}
-            validationSchema={loginSchema}
-            onSubmit={(values) => console.log(values)}
             component={(props) => <LoginForm {...props} />}
           />
 

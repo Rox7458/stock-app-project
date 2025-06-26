@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 
 const RegisterForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
   return (
@@ -7,7 +8,7 @@ const RegisterForm = ({ values, errors, touched, handleChange, handleBlur, handl
       <TextField
         fullWidth
         name="username"
-        label="User name"
+        label="Username"
         onChange={handleChange}
         onBlur={handleBlur}
         variant="outlined"
@@ -17,32 +18,30 @@ const RegisterForm = ({ values, errors, touched, handleChange, handleBlur, handl
         helperText={touched.username && errors.username}
         margin="normal"
       />
-
       <TextField
         fullWidth
-        name="firstname"
-        label="First name"
+        name="firstName"
+        label="Firstname"
         onChange={handleChange}
         onBlur={handleBlur}
         variant="outlined"
         type="text"
-        value={values.firstname}
-        error={touched.firstname && Boolean(errors.firstname)}
-        helperText={touched.firstname && errors.firstname}
+        value={values.firstName}
+        error={touched.firstName && Boolean(errors.firstName)}
+        helperText={touched.firstName && errors.firstName}
         margin="normal"
       />
-
       <TextField
         fullWidth
-        name="lastname"
-        label="Last name"
+        name="lastName"
+        label="Lastname"
         onChange={handleChange}
         onBlur={handleBlur}
         variant="outlined"
         type="text"
-        value={values.lastname}
-        error={touched.lastname && Boolean(errors.lastname)}
-        helperText={touched.lastname && errors.lastname}
+        value={values.lastName}
+        error={touched.lastName && Boolean(errors.lastName)}
+        helperText={touched.lastName && errors.lastName}
         margin="normal"
       />
 
