@@ -2,7 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const stockSlice = createSlice({
   name: "stock",
-  initialState: {},
+  initialState: {
+    currentUser: null,
+    loading: false,
+    firms: [],
+    brands: [],
+    purchases: [],
+    products: [],
+    sales: [],
+  },
   reducers: {
     fetchStart: (state) => {
       state.loading = true;
