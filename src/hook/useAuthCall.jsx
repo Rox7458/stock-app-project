@@ -11,6 +11,7 @@ const useAuthCall = () => {
   const { token } = useSelector((state) => state.auth);
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  
 
   //!    REGISTER
 
