@@ -1,3 +1,4 @@
+
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -14,14 +15,17 @@ import * as Yup from "yup";
 import useAuthCall from "../hook/useAuthCall";
 
 const Login = () => {
-  const { login } = useAuthCall();
+
+  const {login}=useAuthCall()
+ 
 
   const SignupSchema = Yup.object().shape({
     username: Yup.string()
       .min(5, "Kullanıcı adı 5 karakterden az olamaz")
       .max(50, "Kullanıcı adı 50 karakterden fazla olamaz")
       .required("Kullanıcı adı zorunludur"),
-    password: Yup.string().required("password zorunludur"),
+      password: Yup.string()
+      .required("password zorunludur")
   });
   return (
     <Container maxWidth="lg">
@@ -55,16 +59,18 @@ const Login = () => {
             initialValues={{ username: "", password: "" }}
             validationSchema={SignupSchema}
             onSubmit={(values, actions) => {
-              console.log(values);
-              login(values);
+              console.log(values)
+              login(values)
               actions.resetForm();
               actions.setSubmitting(false);
             }}
-            component={(props) => <LoginForm {...props} />}
-          />
-
+            component={(props) => <LoginForm {...props} />}/>
+              
+         
           <Box sx={{ textAlign: "center", mt: 2, color: "secondary.main" }}>
-            <Link to="/register">Don't have an account? Sign Up</Link>
+            <Link to="/register">
+              Don't have an account? Sign Up
+            </Link>
           </Box>
         </Grid>
 
