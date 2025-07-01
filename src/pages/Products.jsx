@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import useStockCall from "../hook/useStockCall";
 
 const Products = () => {
-  return (
-    <div>Products</div>
-  )
-}
+  const { getData } = useStockCall();
 
-export default Products
+  useEffect(() => {
+    getData("products");
+  }, []);
+  return <div>Products</div>;
+};
+
+export default Products;
