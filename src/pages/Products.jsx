@@ -1,13 +1,27 @@
-import React, { useEffect } from "react";
-import useStockCall from "../hook/useStockCall";
+import React, { useEffect } from 'react'
+import useStockCall from '../hook/useStockCall'
+import { Button, Typography } from '@mui/material'
+import ProductsTable from './../components/Tables/ProductsTable';
 
 const Products = () => {
-  const { getData } = useStockCall();
+      const {getData}=useStockCall()
+    
+      useEffect(()=>{
+        getData("products")
+      },[])
+  return (
+    <div>
+        <Typography variant="h4" component="h1" color="secondary.second">
+              Products
+            </Typography>
+            <Button variant="contained" sx={{ mt: 3 }} >
+              NEW PRODUCT
+            </Button>
 
-  useEffect(() => {
-    getData("products");
-  }, []);
-  return <div>Products</div>;
-};
 
-export default Products;
+            <ProductsTable/>
+    </div>
+  )
+}
+
+export default Products

@@ -1,11 +1,13 @@
 import { Button, CircularProgress } from "@mui/material";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { Form } from "formik";
-import { useSelector } from "react-redux";
+import Box from "@mui/material/Box"
+import TextField from "@mui/material/TextField"
+import { Form } from "formik"
+import { useSelector } from "react-redux"
 
-const LoginForm = ({ values, handleChange, errors, touched, handleBlur, handleSubmit }) => {
-  const { loading } = useSelector((state) => state.auth);
+
+
+const LoginForm = ({ values, handleChange, errors, touched, handleBlur,handleSubmit }) => {
+  const { loading } = useSelector(state => state.auth);// storeda yaptığımız fetchStart işlemini kullanmış olduk.
   return (
     <Form onSubmit={handleSubmit}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -35,16 +37,24 @@ const LoginForm = ({ values, handleChange, errors, touched, handleBlur, handleSu
         />
         {!loading ? (
           <Button variant="contained" type="submit">
-            Sign In
+           Sign In
           </Button>
         ) : (
           <Button variant="contained" disabled={loading}>
             <CircularProgress />
           </Button>
         )}
+
+        {/* <Button
+          variant="contained"
+          type="submit"
+          disabled={loading}
+          startIcon={loading && <CircularProgress />}>
+          Submit
+        </Button> */}
       </Box>
     </Form>
   );
-};
+}
 
-export default LoginForm;
+export default LoginForm

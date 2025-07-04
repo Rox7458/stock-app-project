@@ -10,11 +10,11 @@ import Purchases from "../pages/Purchases";
 import Products from "../pages/Products";
 import Home from "../pages/Home";
 import Firms from "../pages/Firms";
-import Sales from "./../pages/Sales";
+import Sales from './../pages/Sales';
 const AppRouter = () => {
   return (
     <Router>
-      <Routes>
+          <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="stock" element={<PrivateRouter />}>
